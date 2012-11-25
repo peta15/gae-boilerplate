@@ -303,7 +303,6 @@ class CallbackSocialLoginHandler(BaseHandler):
             twitter_helper = twitter.TwitterAuth(self)
             user_data = twitter_helper.auth_complete(oauth_token,
                 oauth_verifier)
-            logging.info('twitter user_data: ' + str(user_data))
             if self.user:
                 # new association with twitter
                 user_info = models.User.get_by_id(long(self.user_id))
@@ -362,7 +361,6 @@ class CallbackSocialLoginHandler(BaseHandler):
             # retrieve the access token using the code and auth object
             access_token = github_helper.get_access_token(code)
             user_data = github_helper.get_user_info(access_token)
-            logging.info('github user_data: ' + str(user_data))
             if self.user:
                 # user is already logged in so we set a new association with twitter
                 user_info = models.User.get_by_id(long(self.user_id))
@@ -410,7 +408,6 @@ class CallbackSocialLoginHandler(BaseHandler):
             access_token = token['access_token']
             fb = facebook.GraphAPI(access_token)
             user_data = fb.get_object('me')
-            logging.info('facebook user_data: ' + str(user_data))
             if self.user:
                 # new association with facebook
                 user_info = models.User.get_by_id(long(self.user_id))
@@ -473,7 +470,6 @@ class CallbackSocialLoginHandler(BaseHandler):
             user_key = re.search(r'key=(\d+)', u_data.private_url).group(1)
             user_data={'first_name':u_data.first_name, 'last_name':u_data.last_name ,'id':user_key}
             self.session['linkedin'] = json.dumps(user_data)
-            logging.info('linkedin user_data: ' + str(user_data))
 
             if self.user:
                 # new association with linkedin
